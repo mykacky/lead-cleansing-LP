@@ -136,6 +136,7 @@ img, svg { display: block; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 .reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
 
 /* ─── NAV ─────────────────────────────────────────────────── */
 nav {
@@ -406,9 +407,7 @@ nav {
   color: var(--muted);
   line-height: 1.7;
 }
-/* Last 2 cards centered in desktop 3-col grid */
-.problem-card-4 { grid-column: 1 / 2; margin-left: calc(50% + 8px); }
-.problem-card-5 { grid-column: 2 / 3; }
+/* 6-card 3×2 grid — no special positioning needed */
 
 /* ─── ROOT CAUSE ──────────────────────────────────────────── */
 #rootcause {
@@ -463,51 +462,96 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
   flex-shrink: 0;
   width: 56px;
 }
 .flow-arrow-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 4px;
+  width: 100%;
 }
 .flow-arrow-line {
-  width: 40px;
-  height: 1px;
+  flex: 1;
+  height: 2px;
   background: repeating-linear-gradient(
     90deg,
     var(--red) 0px,
-    var(--red) 4px,
-    transparent 4px,
-    transparent 8px
+    var(--red) 5px,
+    transparent 5px,
+    transparent 10px
   );
+  background-size: 10px 2px;
+  animation: flow-dash 0.4s linear infinite;
 }
-.flow-x-badge {
-  width: 22px;
-  height: 22px;
-  background: var(--red);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-  font-family: var(--font-display);
+@keyframes flow-dash {
+  0%   { background-position: 0 0; }
+  100% { background-position: 10px 0; }
+}
+.flow-arrowhead {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--red);
   flex-shrink: 0;
 }
-.rootcause-body {
-  max-width: 640px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 24px 28px;
+.rootcause-insight {
+  background: linear-gradient(135deg, rgba(61,107,255,0.08) 0%, rgba(107,79,255,0.06) 100%);
+  border: 1px solid rgba(61,107,255,0.25);
+  border-radius: var(--radius);
+  padding: 40px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.rootcause-insight::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+.rootcause-insight-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rootcause-insight-label::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.rootcause-insight-headline {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.rootcause-insight-headline em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.rootcause-insight-body {
   font-size: 15px;
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.8;
+  max-width: 680px;
 }
 
 /* ─── SOLUTION ────────────────────────────────────────────── */
@@ -516,12 +560,14 @@ nav {
 }
 .solution-flow {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
   margin-bottom: 40px;
 }
 .sol-node {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -578,7 +624,33 @@ nav {
   align-items: center;
   justify-content: center;
 }
-.sol-arrow svg { color: var(--accent); opacity: 0.6; }
+.sol-arrow-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+.sol-arrow-line {
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0px,
+    var(--accent) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  background-size: 10px 2px;
+  animation: flow-dash 0.4s linear infinite;
+}
+.sol-arrowhead {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--accent);
+  flex-shrink: 0;
+}
 .sol-pills {
   display: flex;
   flex-wrap: wrap;
@@ -860,6 +932,7 @@ nav {
 }
 .faq-item.open .faq-a {
   max-height: 200px;
+  padding-top: 16px;
   padding-bottom: 24px;
 }
 .faq-item.open .faq-q { background: var(--card); }
@@ -977,11 +1050,6 @@ footer {
   .btn-large { width: 100%; justify-content: center; }
 
   .problem-grid { grid-template-columns: 1fr; }
-  .problem-card-4,
-  .problem-card-5 {
-    grid-column: auto !important;
-    margin-left: 0 !important;
-  }
 
   .rootcause-flow { flex-direction: column; gap: 12px; }
   .flow-arrow-wrap { width: auto; height: 40px; justify-content: center; transform: rotate(90deg); }
@@ -1062,7 +1130,7 @@ section[id] { scroll-margin-top: 64px; }
     <div class="hero-content">
       <div class="hero-badge reveal">
         <span class="hero-badge-dot"></span>
-        3社限定 · 無償PoC募集中
+        3社限定 · PoCパートナー募集中
       </div>
 
       <h1 class="reveal reveal-delay-1">
@@ -1075,22 +1143,18 @@ section[id] { scroll-margin-top: 64px; }
       </p>
 
       <div class="hero-actions reveal reveal-delay-3">
-        <a href="YOUR_GOOGLE_FORM_URL" class="btn btn-primary btn-large">無償PoCに申し込む →</a>
+        <a href="YOUR_GOOGLE_FORM_URL" class="btn btn-primary btn-large">PoCに申し込む →</a>
         <a href="#solution" class="btn btn-outline btn-large">LeadFabricとは？</a>
       </div>
 
       <p class="hero-note reveal reveal-delay-4">
-        完全無償<span>·</span>3社限定<span>·</span>NDA締結の上でご提供
+        3社限定<span>·</span>NDA締結の上でご提供
       </p>
 
       <div class="hero-stats reveal reveal-delay-5">
         <div class="hero-stat">
           <div class="hero-stat-num"><span class="accent">3</span>社</div>
           <div class="hero-stat-label">限定募集枠</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num"><span class="accent">0</span>円</div>
-          <div class="hero-stat-label">PoC期間中完全無償</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-num"><span class="accent">0</span>h</div>
@@ -1111,29 +1175,34 @@ section[id] { scroll-margin-top: 64px; }
 
     <div class="problem-grid">
       <div class="problem-card reveal reveal-delay-1">
-        <div class="problem-icon-box">🗂️</div>
-        <h3>展示会後のデータ加工が、毎回手作業</h3>
-        <p>展示会・セミナーのたびにExcelでの突合作業が発生。マーケターの時間が奪われ続ける。</p>
+        <div class="problem-icon-box">📥</div>
+        <h3>チャネルごとに形式がバラバラ、使えない状態で届く</h3>
+        <p>展示会・資料ダウンロード・セミナー・イベントから多様な形式でリストが届く。ビジネスの種なのに、クレンジング作業が膨大すぎて活用しきれない。</p>
       </div>
       <div class="problem-card reveal reveal-delay-2">
-        <div class="problem-icon-box">👨‍💻</div>
-        <h3>エンジニアに頼まないと、一歩も前に進めない</h3>
-        <p>CSVの加工・フォーマット変換・CRMへのインポート設定、すべてに開発リソースが必要。</p>
+        <div class="problem-icon-box">😩</div>
+        <h3>マーケターが作業に忙殺され、本来業務が止まる</h3>
+        <p>施策ごとにリストを統一フォーマットへ整える作業が毎回発生。分析・企画に注力すべき時間が、手作業のデータ加工に食いつぶされる。</p>
       </div>
       <div class="problem-card reveal reveal-delay-3">
-        <div class="problem-icon-box">💔</div>
-        <h3>データが汚くて、CRMが誰にも使われない</h3>
-        <p>「株式会社ABC」と「ABC（株）」が別レコードに。重複・表記揺れだらけで誰も信用しない。</p>
+        <div class="problem-icon-box">🔒</div>
+        <h3>外資系はAPI接続不可、CSV手動アップロードしか使えない</h3>
+        <p>本社のCRM統制が厳しく、API連携が認められないケースが多い。手間をかけて整備した連携基盤が使えず、毎回CSVでの手動アップロードを強いられる。</p>
       </div>
-      <div class="problem-card problem-card-4 reveal reveal-delay-4">
-        <div class="problem-icon-box">😤</div>
-        <h3>インサイドセールスが、CRMに入力しない</h3>
-        <p>汚いデータを見て「どうせ使えない」とモチベーションが下がり、活動履歴が残らない。</p>
+      <div class="problem-card reveal reveal-delay-4">
+        <div class="problem-icon-box">🔀</div>
+        <h3>スピード優先でスプレッドシートに逃げると、後続が詰まる</h3>
+        <p>CRMへのアップロードを待てず、スプレッドシートでフォローを進めると、キャンペーン情報との紐付けが途切れる。マーケ・インサイド・営業の連携が分断される。</p>
       </div>
-      <div class="problem-card problem-card-5 reveal reveal-delay-5">
+      <div class="problem-card reveal reveal-delay-5">
         <div class="problem-icon-box">📊</div>
-        <h3>マーケ投資のROIを、経営に説明できない</h3>
-        <p>データが整っていないため、施策の貢献度が可視化できず、予算獲得に苦労する。</p>
+        <h3>ROIが経営に説明できず、予算が削られる</h3>
+        <p>データが散在・分断されているため、どの施策が商談・受注に貢献したか追えない。根拠ある投資判断ができず、マーケ予算の獲得・維持が年々難しくなる。</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-6">
+        <div class="problem-icon-box">⛓️‍💥</div>
+        <h3>THE MODELが機能せず、パイプライン管理が崩壊する</h3>
+        <p>上流のリード情報の汚さと未入力が、後工程のCRMを形骸化させる。適切なMQL/SQL判定・案件管理・パイプライン可視化には、上流データの整備が不可欠だ。</p>
       </div>
     </div>
   </div>
@@ -1156,8 +1225,8 @@ section[id] { scroll-margin-top: 64px; }
 
       <div class="flow-arrow-wrap">
         <div class="flow-arrow-inner">
-          <div class="flow-x-badge">✕</div>
           <div class="flow-arrow-line"></div>
+          <div class="flow-arrowhead"></div>
         </div>
       </div>
 
@@ -1169,8 +1238,8 @@ section[id] { scroll-margin-top: 64px; }
 
       <div class="flow-arrow-wrap">
         <div class="flow-arrow-inner">
-          <div class="flow-x-badge">✕</div>
           <div class="flow-arrow-line"></div>
+          <div class="flow-arrowhead"></div>
         </div>
       </div>
 
@@ -1181,8 +1250,10 @@ section[id] { scroll-margin-top: 64px; }
       </div>
     </div>
 
-    <div class="rootcause-body reveal">
-      CRMを正しく運用するには、データが入る前の段階を正しくする必要があります。上流のリード情報が整っていなければ、どれだけCRMを改善しても根本解決にはなりません。
+    <div class="rootcause-insight reveal">
+      <div class="rootcause-insight-label">Key Insight</div>
+      <p class="rootcause-insight-headline">どれだけCRMに投資しても、<br><em>上流のデータが汚ければ、すべて無駄になる。</em></p>
+      <p class="rootcause-insight-body">CRMの設定を見直しても、運用ルールを変えても、上流から入ってくるリードデータが整っていなければ根本解決にはなりません。問題はCRMの中ではなく、データが「入ってくる前」の段階にあります。リードの収集・変換・クレンジングを正しくしない限り、パイプライン管理は永遠に改善せず、CRMへの投資は積み上がりません。</p>
     </div>
   </div>
 </section>
@@ -1208,9 +1279,10 @@ section[id] { scroll-margin-top: 64px; }
       </div>
 
       <div class="sol-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="sol-arrow-inner">
+          <div class="sol-arrow-line"></div>
+          <div class="sol-arrowhead"></div>
+        </div>
       </div>
 
       <div class="sol-node sol-node-center">
@@ -1225,17 +1297,18 @@ section[id] { scroll-margin-top: 64px; }
       </div>
 
       <div class="sol-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="sol-arrow-inner">
+          <div class="sol-arrow-line"></div>
+          <div class="sol-arrowhead"></div>
+        </div>
       </div>
 
       <div class="sol-node">
-        <div class="sol-node-label">MA / CRM ready</div>
+        <div class="sol-node-label">MA / CRM Ready</div>
         <h4>そのまま取り込めるデータに</h4>
         <ul>
-          <li>Marketo互換CSV</li>
-          <li>インポート即可能</li>
+          <li>MA / CRM互換CSV</li>
+          <li>即インポート可能</li>
         </ul>
       </div>
     </div>
@@ -1288,7 +1361,7 @@ section[id] { scroll-margin-top: 64px; }
   <div class="poc-glow"></div>
   <div class="container">
     <div class="label reveal">Limited Offer</div>
-    <h2 class="section-title reveal">「3社限定、完全無償で<br>ご提供します」</h2>
+    <h2 class="section-title reveal">「3社限定の<br>PoCパートナーを募集します」</h2>
     <p class="poc-sub reveal">プロダクトを一緒に磨いてくれるパートナー企業を探しています。</p>
 
     <div class="poc-grid">
@@ -1301,7 +1374,7 @@ section[id] { scroll-margin-top: 64px; }
           LeadFabricが提供すること
         </div>
         <ul class="poc-list green-icons">
-          <li><span class="icon">✓</span>LeadFabricの全機能を無償で提供</li>
+          <li><span class="icon">✓</span>LeadFabricの全機能をご提供</li>
           <li><span class="icon">✓</span>セットアップ・初期設定を個別サポート</li>
           <li><span class="icon">✓</span>導入後のフォローアップ対応</li>
           <li><span class="icon">✓</span>正式リリース時の優先プラン案内</li>
@@ -1328,7 +1401,7 @@ section[id] { scroll-margin-top: 64px; }
     <div class="poc-badge reveal">
       <div class="poc-badge-label">残り募集枠</div>
       <div class="poc-badge-num">3社</div>
-      <div class="poc-badge-sub">先着順・無償提供・NDA締結の上でご参加いただけます</div>
+      <div class="poc-badge-sub">先着順・NDA締結の上でご参加いただけます</div>
     </div>
   </div>
 </section>
@@ -1348,7 +1421,7 @@ section[id] { scroll-margin-top: 64px; }
           <span class="faq-chevron" aria-hidden="true">↓</span>
         </button>
         <div class="faq-a" id="faq-a-1">
-          PoC期間中は完全無償でご利用いただけます。正式リリース後の価格については、PoC参加企業には優先的にご案内いたします。
+          費用については、申込後に個別にご相談させていただきます。まずはお気軽にお問い合わせください。
         </div>
       </div>
       <div class="faq-item">
@@ -1378,6 +1451,15 @@ section[id] { scroll-margin-top: 64px; }
           申込後、最短1週間以内にご利用開始いただけます。初回は個別にセットアップサポートをご提供します。
         </div>
       </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-5">
+          リード情報はLeadFabricに保存されますか？
+          <span class="faq-chevron" aria-hidden="true">↓</span>
+        </button>
+        <div class="faq-a" id="faq-a-5">
+          いいえ、リード情報自体を保存することはありません。
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1390,11 +1472,11 @@ section[id] { scroll-margin-top: 64px; }
   <div class="contact-grid-overlay"></div>
   <div class="container">
     <h2 class="reveal">まず、話を<br>聞いてみませんか。</h2>
-    <p class="contact-sub reveal">3社限定の無償PoCです。ご興味のある方は、まずお気軽にフォームからご連絡ください。</p>
+    <p class="contact-sub reveal">3社限定のPoCパートナーシップです。ご興味のある方は、まずお気軽にフォームからご連絡ください。</p>
     <div class="contact-cta-wrap reveal">
       <a href="YOUR_GOOGLE_FORM_URL" class="btn btn-primary btn-large">Googleフォームで申し込む →</a>
       <p class="contact-note">
-        残り3社<span>·</span>完全無償<span>·</span>NDA締結の上でご提供<span>·</span>ご質問もお気軽に
+        残り3社<span>·</span>NDA締結の上でご提供<span>·</span>ご質問もお気軽に
       </p>
     </div>
   </div>
